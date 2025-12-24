@@ -1,0 +1,6 @@
+require("Test.after.plugin.colors")
+require("Test.after.plugin.treesitter")
+require("Test.after.plugin.undotree")
+require("Test.after.plugin.telescope")
+require("Test.after.plugin.harpoon")
+require("Test.after.plugin.fugitive")
