@@ -9,7 +9,7 @@ require 'typst-preview'.setup {
 
   -- Custom port to open the preview server. Default is random.
   -- Example: port = 8000
-  port = 8080,
+  port = 0,
 
   -- Setting this to 'always' will invert black and white in the preview
   -- Setting this to 'auto' will invert depending if the browser has enable
@@ -50,3 +50,17 @@ require 'typst-preview'.setup {
     return path_of_buffer
   end,
 }
+  vim.api.nvim_create_autocmd("FileType", {
+  pattern = "typst",
+  callback = function()
+    vim.keymap.set("n", "<C-p>", vim.cmd.TypstPreviewToggle, { buffer = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufDelete", {
+  pattern = "*.typ",
+  callback = function()
+    vim.cmd("TypstPreviewStop")
+  end,
+})
+
