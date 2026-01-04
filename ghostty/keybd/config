@@ -1,5 +1,8 @@
 keybind = super+,+shift=reload_config
 
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+
 keybind = super+n=new_split:auto
 keybind = super+q=close_surface
 

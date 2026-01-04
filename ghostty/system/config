@@ -1,0 +1,4 @@
+macos-shortcuts = deny
+copy-on-select = true
+clipboard-read = allow
+clipboard-write = allow
