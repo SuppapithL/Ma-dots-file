@@ -1,0 +1,9 @@
+[opener]
+pdf-reader = [
+    { run = 'bash -c "/Users/ton.m/.cargo/bin/tdf \"$@\""', block = true, desc = "Open with tdf" }
+]
+
+[open]
+prepend_rules = [
+    { mime = "application/pdf", use = "pdf-reader" }
+]
