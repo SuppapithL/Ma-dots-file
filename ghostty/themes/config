@@ -3,5 +3,5 @@ background-opacity = 0.8
 background-blur = true
 
 fullscreen = true
-macos-non-native-fullscreen = true
+macos-non-native-fullscreen = padded-notch
 window-decoration = false
