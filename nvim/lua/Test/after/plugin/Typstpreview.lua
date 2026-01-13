@@ -1,66 +1,45 @@
-require 'typst-preview'.setup {
-  -- Setting this true will enable logging debug information to
-  -- `vim.fn.stdpath 'data' .. '/typst-preview/log.txt'`
-  debug = false,
-
-  -- Custom format string to open the output link provided with %s
-  -- Example: open_cmd = 'firefox %s -P typst-preview --class typst-preview'
-  open_cmd = "ghostty -e bash -c 'curl -s %s | /opt/homebrew/bin/vat -; read'",
-
-  -- Custom port to open the preview server. Default is random.
-  -- Example: port = 8000
-  port = 0,
-
-  -- Setting this to 'always' will invert black and white in the preview
-  -- Setting this to 'auto' will invert depending if the browser has enable
-  -- dark mode
-  -- Setting this to '{"rest": "<option>","image": "<option>"}' will apply
-  -- your choice of color inversion to images and everything else
-  -- separately.
-  invert_colors = 'never',
-
-  -- Whether the preview will follow the cursor in the source file
-  follow_cursor = true,
-
-  -- Provide the path to binaries for dependencies.
-  -- Setting this will skip the download of the binary by the plugin.
-  -- Warning: Be aware that your version might be older than the one
-  -- required.
-  dependencies_bin = {
-    ['tinymist'] = nil,
-    ['websocat'] = nil
-  },
-
-  -- A list of extra arguments (or nil) to be passed to previewer.
-  -- For example, extra_args = { "--input=ver=draft", "--ignore-system-fonts" }
-  extra_args = nil,
-
-  -- This function will be called to determine the root of the typst project
-  get_root = function(path_of_main_file)
-    local root = os.getenv 'TYPST_ROOT'
-    if root then
-      return root
-    end
-    return vim.fn.fnamemodify(path_of_main_file, ':p:h')
-  end,
-
-  -- This function will be called to determine the main file of the typst
-  -- project.
-  get_main_file = function(path_of_buffer)
-    return path_of_buffer
-  end,
-}
-  vim.api.nvim_create_autocmd("FileType", {
-  pattern = "typst",
-  callback = function()
-    vim.keymap.set("n", "<C-p>", vim.cmd.TypstPreviewToggle, { buffer = true })
-  end,
+require("typst-preview").setup({
+    preview = {
+        max_width = 80, -- Maximum width of the preview window (columns)
+        ppi = 144, -- The PPI (pixels per inch) to use for PNG export (high value will affect the performance)
+        position = "right", -- The position of the preview window relative to the code window
+    },
+    statusline = {
+        enabled = true, -- Show statusline
+        compile = { -- Last compilation status
+            ok = { icon = "", color = "#b8bb26" },
+            ko = { icon = "", color = "#fb4943" },
+        },
+        page_count = { -- Page count
+            color = "#d5c4e1",
+        },
+    },
 })
 
-vim.api.nvim_create_autocmd("BufDelete", {
-  pattern = "*.typ",
-  callback = function()
-    vim.cmd("TypstPreviewStop")
-  end,
-})
+vim.keymap.set("n", "<leader>ts", function()
+  require("typst-preview").start()
+end, { desc = "Start Typst preview" })
 
+vim.keymap.set("n", "<leader>tq", function()
+  require("typst-preview").stop()
+end, { desc = "Stop Typst preview" })
+
+vim.keymap.set("n", "<leader>tn", function()
+  require("typst-preview").next_page()
+end, { desc = "Next page" })
+
+vim.keymap.set("n", "<leader>tp", function()
+  require("typst-preview").prev_page()
+end, { desc = "Previous page" })
+
+vim.keymap.set("n", "<leader>tr", function()
+  require("typst-preview").refresh()
+end, { desc = "Refresh preview" })
+
+vim.keymap.set("n", "<leader>tgg", function()
+  require("typst-preview").first_page()
+end, { desc = "First page" })
+
+vim.keymap.set("n", "<leader>tG", function()
+  require("typst-preview").last_page()
+end, { desc = "Last page" })

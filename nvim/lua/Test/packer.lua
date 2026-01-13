@@ -18,6 +18,6 @@ use("ThePrimeagen/harpoon")
 use("mbbill/undotree")
 use("tpope/vim-fugitive")
 use("neovim/nvim-lspconfig")
-use("chomosuke/typst-preview.nvim")
+use("al-kot/typst-preview.nvim")
 use {'kaarmu/typst.vim', ft = {'typst'}}
 end)
